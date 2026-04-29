@@ -37,7 +37,7 @@ namespace ESFE.DataAccess.Repositories
             _transaction = null;
         }
 
-        public async Task DeleteAsync()
+        public async Task RollbackAsync()
         {
             if (_transaction == null)
             {

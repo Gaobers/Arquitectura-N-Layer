@@ -6,6 +6,6 @@ namespace ESFE.DataAccess.Interfaces
     {
         Task BeginTransactionAsync();
         Task CommitAsync();
-        Task DeleteAsync();
+        Task RollbackAsync();
     }
 }
