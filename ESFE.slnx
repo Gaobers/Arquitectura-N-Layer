@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="ESFE.BusinessLogic/ESFE.BusinessLogic.csproj" />
+  <Project Path="ESFE.DataAccess/ESFE.DataAccess.csproj" />
+  <Project Path="ESFE.Entities/ESFE.Entities.csproj" />
+  <Project Path="ESFE.WebApplication/ESFE.WebApplication.csproj" />
+</Solution>
