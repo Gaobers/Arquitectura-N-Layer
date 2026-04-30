@@ -18,8 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\" />
-    <Folder Include="DTOs\" />
+    <Folder Include="UseCases\Brands\Queries\" />
   </ItemGroup>
 
 </Project>
