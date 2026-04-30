@@ -18,10 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\Products\Commands\CreateProducts\" />
-    <Folder Include="UseCases\Products\Commands\UpdateProducts\" />
     <Folder Include="UseCases\Products\Queries\" />
-    <Folder Include="UseCases\Products\Specifications\" />
   </ItemGroup>
 
 </Project>
