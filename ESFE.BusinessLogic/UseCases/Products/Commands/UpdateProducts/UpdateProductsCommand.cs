@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ESFE.BusinessLogic.DTOs;
+using MediatR;
 
 namespace ESFE.BusinessLogic.UseCases.Products.Commands.UpdateProducts
 {
-    internal class UpdateProductsCommand
-    {
-    }
+    public record UpdateProductsCommand(UpdateProductRequest Request) : IRequest<long>;
 }
