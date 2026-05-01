@@ -4,6 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <OutputType>Library</OutputType>
+    <AssemblyTitle>ESFE.BusinessLogic.</AssemblyTitle>
   </PropertyGroup>
 
   <ItemGroup>
