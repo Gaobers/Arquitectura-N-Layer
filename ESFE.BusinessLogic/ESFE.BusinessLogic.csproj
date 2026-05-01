@@ -17,4 +17,8 @@
     <ProjectReference Include="..\ESFE.Entities\ESFE.Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UseCases\Cotations\Queries\" />
+  </ItemGroup>
+
 </Project>
