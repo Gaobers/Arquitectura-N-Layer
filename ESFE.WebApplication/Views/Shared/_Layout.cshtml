@@ -23,11 +23,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">usuarios</a>
-                        </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Cerrar Sesion ">Cerrar Sesion</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Usuarios<a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Cerrar Sesion ">Cerrar Sesion</a>
+                                <span>@User.Identity.Name</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Brand" asp-action="Index">Marcas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User " asp-action="Index">Cerrar Sesion </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">inicio Sesion</a>
                                 <span>@User.Identity.Name</span>
                                 </li>
                     </ul>
