@@ -1,4 +1,6 @@
-﻿namespace ESFE.BusinessLogic.DTOs;
+﻿using ESFE.Entities;
+
+namespace ESFE.BusinessLogic.DTOs;
 
 public class CreateProductRequest
 {
@@ -66,6 +68,33 @@ public class ProductResponse
 
     public string BrandName { get; set; } = null!;
 }
+
+public class ProductByIdResponse
+{
+    public int ProductId { get; set; }
+
+    public int BrandId { get; set; }
+
+    public string? SupplierName { get; set; }
+
+    public string ProductCode { get; set; } = null!;
+
+    public string ProductName { get; set; } = null!;
+
+    public string? ProductDescription { get; set; }
+
+    public string? ProductImage { get; set; }
+
+    public decimal PriceUnitPurchase { get; set; }
+
+    public decimal PriceUnitSale { get; set; }
+
+    public int Stock { get; set; }
+
+    public bool ProductStatus { get; set; }
+
+}
+
 
 
 
