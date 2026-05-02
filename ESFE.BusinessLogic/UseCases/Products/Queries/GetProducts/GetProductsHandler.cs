@@ -5,20 +5,20 @@ using ESFE.Entities;
 using Mapster;
 using MediatR;
 
-namespace ESFE.BusinessLogic.UseCases.Products.Queries.GetProduct
+namespace ESFE.BusinessLogic.UseCases.Products.Queries.GetProducts
 {
-    internal sealed class GetProductHandler(IEfRepository<Product> _repository) : IRequestHandler<GetProductQuery, ProductByIdResponse>
+    internal sealed class GetProductsHandler(IEfRepository<Product> _repository) : IRequestHandler<GetProductsQuery, List<ProductResponse>>
     {
-        public async Task<ProductByIdResponse> Handle(GetProductQuery query, CancellationToken cancellationToken)
+        public async Task<List<ProductResponse>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            var product = await _repository.GetByIdAsync(query.productId, cancellationToken);
+            var products = await _repository.ListAsync(new GetProductWithBrandSpec(), cancellationToken);
 
-            if (product is null)
+            if (products == null && !products.Any())
             {
-                return new ProductByIdResponse();
+                return new List<ProductResponse>();
             }
 
-            return product.Adapt<ProductByIdResponse>();
+            return products.Adapt<List<ProductResponse>>();
         }
     }
 }

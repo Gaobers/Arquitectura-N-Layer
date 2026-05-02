@@ -5,29 +5,29 @@ namespace ESFE.Entities;
 
 public partial class Quotation
 {
-    public int QuotationId { get; set; }
+    public long QuotationId { get; set; }
 
-    public string ClientName { get; set; } = null!;
+    public string? ClientName { get; set; }
 
     public string? ClientPhone { get; set; }
 
-    public string SellerName { get; set; } = null!;
+    public string? SellerName { get; set; }
 
-    public int UserId { get; set; }
+    public int? UserId { get; set; }
 
     public string? PaymentMethodName { get; set; }
 
-    public string QuotationNumber { get; set; } = null!;
+    public long QuotationNumber { get; set; }
 
-    public int ValidityDays { get; set; }
+    public int? ValidityDays { get; set; }
 
-    public DateTime QuotationRegistration { get; set; }
+    public DateTime? QuotationRegistration { get; set; }
 
-    public decimal Total { get; set; }
+    public decimal? Total { get; set; }
 
     public bool QuotationStatus { get; set; }
 
     public virtual ICollection<QuotationDetail> QuotationDetails { get; set; } = new List<QuotationDetail>();
 
-    public virtual User User { get; set; } = null!;
+    public virtual User? User { get; set; }
 }

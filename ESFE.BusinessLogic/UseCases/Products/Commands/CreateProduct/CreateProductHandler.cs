@@ -1,5 +1,4 @@
-﻿using ESFE.BusinessLogic.DTOs;
-using ESFE.BusinessLogic.UseCases.Products.Commands.CreateProduct;
+﻿using ESFE.BusinessLogic.UseCases.Products.Commands.CreateProduct;
 using ESFE.BusinessLogic.UseCases.Products.Specifications;
 using ESFE.DataAccess.Interfaces;
 using ESFE.Entities;
@@ -35,7 +34,7 @@ namespace ESFE.BusinessLogic.UseCases.Products.Commands.CreateProducts
                 var newProduct = command.Request.Adapt<Product>();
                 var createdProduct = await _repository.AddAsync(newProduct, cancellationToken);
                 return createdProduct.ProductId;
-               
+
             }
             catch (Exception)
             {

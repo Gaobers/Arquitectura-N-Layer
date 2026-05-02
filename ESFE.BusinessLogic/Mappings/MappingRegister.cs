@@ -1,9 +1,6 @@
 ﻿using ESFE.BusinessLogic.DTOs;
 using ESFE.Entities;
 using Mapster;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ESFE.BusinessLogic.Mappings
 {
@@ -12,8 +9,10 @@ namespace ESFE.BusinessLogic.Mappings
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Product, ProductResponse>()
-                .Map(pd => pd.BrandName, p => p.Brand.Name);
-               
+                .Map(pd => pd.BrandName, p => p.Brand.BrandName);
+
+            config.NewConfig<User, UserResponse>()
+                .Map(ud => ud.RolName, u => u.Rol.RolName);
         }
     }
 }

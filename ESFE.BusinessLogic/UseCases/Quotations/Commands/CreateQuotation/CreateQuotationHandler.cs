@@ -4,7 +4,7 @@ using ESFE.Entities;
 using ESFE.DataAccess.Repositories;
 using Mapster;
 
-namespace ESFE.BusinessLogic.UseCases.Cotations.Commands.CreateQuotation
+namespace ESFE.BusinessLogic.UseCases.Quotations.Commands.CreateQuotation
 {
     internal sealed class CreateQuotationHandler(IEfRepository<Quotation> _repository) : IRequestHandler<CreateQuotationCommand, long>
     {

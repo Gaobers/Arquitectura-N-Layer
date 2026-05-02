@@ -5,8 +5,9 @@ namespace ESFE.BusinessLogic.UseCases.Products.Specifications
 {
     public class GetProductWithBrandSpec : Specification<Product>
     {
-        //public GetProductWithBrandSpec() { 
-        //    Query.Include(p=> p.Brand);
-        //    }
+        public GetProductWithBrandSpec()
+        {
+            Query.Include(p => p.Brand);
+        }
     }
 }
