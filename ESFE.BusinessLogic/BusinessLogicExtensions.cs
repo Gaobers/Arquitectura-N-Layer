@@ -1,4 +1,5 @@
 ﻿using ESFE.DataAccess;
+using Mapster;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -15,6 +16,9 @@ namespace ESFE.BusinessLogic
             );
 
             services.AddDataAccessServices(configuration);
+
+            TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
+      
             return services;
         }
     }
