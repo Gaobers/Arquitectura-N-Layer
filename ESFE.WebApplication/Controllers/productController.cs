@@ -62,7 +62,7 @@ namespace ESFE.WebApplication.Controllers
                         await imagen.CopyToAsync(stream);
                     }
 
-                    // 4. Guardar la ruta relativa en el DTO
+                    
                     dto.ImagenRuta = "/images/products/" + fileName;
                 }
 
