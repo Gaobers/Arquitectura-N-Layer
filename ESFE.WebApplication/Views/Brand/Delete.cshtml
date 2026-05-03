@@ -1,4 +1,4 @@
-﻿@model ESFE.Businesslogic.DTOs.BrandResponse
+﻿@model ESFE.BusinessLogic.DTOs.BrandResponse
 
 @{
     ViewData["Title"] = "Eliminar";
@@ -20,8 +20,7 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="BrandId" />
         <input type="submit" value="Eliminar" class="btn btn-danger" /> |
-        <a asp-action="Index" class="btn btn-info">Volver a la lista</a>
+        <a asp-action="Index" class="btn btn-info">Cancelar</a>
     </form>
 </div>

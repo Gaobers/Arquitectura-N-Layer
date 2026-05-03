@@ -14,7 +14,7 @@ public partial class User
 
     public bool? UserStatus { get; set; }
 
-    public DateOnly? RegistrationDate { get; set; }
+    public DateTime? RegistrationDate { get; set; }
 
     public virtual ICollection<Quotation> Quotations { get; set; } = new List<Quotation>();
 

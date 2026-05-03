@@ -1,19 +1,16 @@
-﻿@model ESE.BusinessLogic.DTOs.CreateUserRequest
+﻿@model ESFE.BusinessLogic.DTOs.CreateUserRequest
 
 @{
-    ViewData["Title"] = "Editar";
+    ViewData["Title"] = "Crear";
 }
 
-<h1>Editar</h1>
+<h1>Crear</h1>
 
 <h4>Usuario</h4>
 <hr />
-<form asp-action="Edit">
+<form asp-action="Create">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     
-    <!-- IMPORTANTE: Campo oculto para el ID del usuario -->
-    <input type="hidden" asp-for="Id" />
-
     <div class="row">
         <!-- Campo: Nombre -->
         <div class="form-group col-4">
@@ -38,7 +35,7 @@
     </div>
 
     <div class="row">
-        <!-- Campo: Password (Opcional en edición según tu lógica de negocio) -->
+        <!-- Campo: Password -->
         <div class="form-group col-3">
             <label asp-for="UserPassword" class="control-label">Password</label>
             <input asp-for="UserPassword" type="password" class="form-control" />
@@ -59,8 +56,8 @@
     <hr />
     <div class="row">
         <div class="form-group mt-3">
-            <input type="submit" value="Guardar Cambios" class="btn btn-primary" />
-            <a asp-action="Index" class="btn btn-info">Volver a la lista</a>
+            <input type="submit" value="Crear" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-info">Cancelar</a>
         </div>
     </div>
 </form>

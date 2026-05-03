@@ -7,7 +7,7 @@ public partial class QuotationDetail
 {
     public int QuotationDetailId { get; set; }
 
-    public int QuotationId { get; set; }
+    public long QuotationId { get; set; }
 
     public int ProductId { get; set; }
 

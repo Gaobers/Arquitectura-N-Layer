@@ -1,158 +1,133 @@
-﻿using ESFE.Entities;
+﻿using ESFE.BusinessLogic.DTOs;
+using ESFE.BusinessLogic.UseCases.Users.Commads.CreateUser;
+using ESFE.BusinessLogic.UseCases.Users.Commads.UpdateUser;
+using ESFE.BusinessLogic.UseCases.Users.Queries.GetRoles;
+using ESFE.BusinessLogic.UseCases.Users.Queries.GetUser;
+using ESFE.BusinessLogic.UseCases.Users.Queries.GetUserAuthenticated;
+using ESFE.BusinessLogic.UseCases.Users.Queries.GetUsers;
+using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 
-// Namespaces de tu Lógica de Negocio
 
-namespace ProyectoWeb.Controllers;
+namespace ESFE.WebApplication.Controllers;
 
-public class GetRolesQuery : IRequest<IEnumerable<Role>>
-{ }
-
-public class GetUserAuthenticatedQuery : IRequest<User> { public string UserName { get; set; } public string Password { get; set; } }
-public class GetUserQuery : IRequest<IEnumerable<User>>
-{ }
-
-public class UsuarioController : Controller
+[Authorize]
+public class UserController : Controller
 {
     private readonly IMediator _mediator;
 
-    public UsuarioController(IMediator mediator)
+    public UserController(IMediator mediator)
     {
         _mediator = mediator;
     }
 
+    [AllowAnonymous]
+    public async Task<IActionResult> CerrarSesion(string? pReturnUrl = null)
+    {
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        return RedirectToAction("Index", "Home");
+    }
+
+    [AllowAnonymous]
     public IActionResult Login()
     {
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(GetUserAuthenticatedQuery query)
+    [AllowAnonymous]
+    public async Task<IActionResult> Login(GetUserAuthenticatedQuery getUserAuthenticatedQuery)
     {
         try
         {
-            var user = await _mediator.Send(query);
-
-            if (user != null)
+            var userResponse = await _mediator.Send(getUserAuthenticatedQuery);
+            if (userResponse != null && userResponse.UserNickname == getUserAuthenticatedQuery.userName)
             {
-                var claims = new[]
-                {
-                    new Claim(ClaimTypes.Name,
-                              user.UserName),
-                    new Claim("Id", user.UserId.ToString())
-                };
-
-                var identity = new ClaimsIdentity(
-                    claims,
-                    CookieAuthenticationDefaults.AuthenticationScheme
-                );
-
-                await HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(identity)
-                );
-
-                return RedirectToAction("Index");
+                var claims = new[] {
+                        new Claim(ClaimTypes.Name, userResponse.UserName),
+                        new Claim("Id", userResponse.UserId.ToString())
+                        };
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), new AuthenticationProperties { IsPersistent = true }); ;
+                return RedirectToAction("Index", "Home");
             }
-
-            throw new Exception("Credenciales incorrectas");
+            else
+                throw new Exception("Credenciales incorrectas");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            ModelState.AddModelError("", "Credenciales incorrectas");
-            return View(query);
+            ModelState.AddModelError("", ex.Message);
+            return View(getUserAuthenticatedQuery);
         }
     }
 
     public async Task<IActionResult> Index()
     {
-        var users = await _mediator.Send(new GetUserQuery());
+        var users = await _mediator.Send(new GetUsersQuery());
         return View(users);
     }
 
     public async Task<IActionResult> Create()
     {
-        var roles = await _mediator.Send(new GetRolesQuery());
-        ViewData["RolId"] = new SelectList(roles, "RolId", "RolName");
+        var rols = await _mediator.Send(new GetRolesQuery());
+        ViewData["RolId"] = new SelectList(rols, "RolId", "RolName");
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(CreateUserRequest request)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(CreateUserRequest createUserRequest)
     {
         try
         {
-            await _mediator.Send(new CreateUserCommand(request));
-            return RedirectToAction("Index");
+            var result = await _mediator.Send(new CreateUserCommand(createUserRequest));
+            if (result > 0)
+                return RedirectToAction(nameof(Index));
+            else
+                throw new Exception("Sucedio un error la intentar guardar la nuevo Usero");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            ModelState.AddModelError("", "Sucedió un error al intentar guardar un nuevo usuario.");
-            return View(request);
+            var rols = await _mediator.Send(new GetRolesQuery());
+            ViewData["RolId"] = new SelectList(rols, "RolId", "RolName");
+            ModelState.AddModelError("", ex.Message);
+            return View(createUserRequest);
         }
     }
 
     public async Task<IActionResult> Edit(int id)
     {
-        var users = await _mediator.Send(new GetUserQuery());
-        var user = users.FirstOrDefault(x => x.UserId == id);
-
-        var roles = await _mediator.Send(new GetRolesQuery());
-        ViewData["RolId"] = new SelectList(roles, "RolId", "RolName");
-
-        return View(user);
+        var user = await _mediator.Send(new GetUserQuery(id));
+        var rols = await _mediator.Send(new GetRolesQuery());
+        ViewData["RolId"] = new SelectList(rols, "RolId", "RolName", user.RolId);
+        return View(user.Adapt(new UpdateUserRequest()));
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(User user)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(UpdateUserRequest updateUserRequest)
     {
         try
         {
-            await _mediator.Send(new UpdateUserCommand(user));
-            return RedirectToAction("Index");
+            var result = await _mediator.Send(new UpdateUserCommand(updateUserRequest));
+            if (result > 0)
+                return RedirectToAction(nameof(Index));
+            else
+                throw new Exception("Sucedio un error la intentar editar Usero");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            ModelState.AddModelError("", "Sucedió un error al intentar editar el usuario.");
-            return View(user);
+            ModelState.AddModelError("", ex.Message);
+            var rols = await _mediator.Send(new GetRolesQuery());
+            ViewData["RolId"] = new SelectList(rols, "RolId", "RolName", updateUserRequest.RolId);
+            return View(updateUserRequest);
         }
-    }
-
-    public async Task<IActionResult> Delete(int id)
-    {
-        var users = await _mediator.Send(new GetUserQuery());
-        var user = users.FirstOrDefault(x => x.UserId == id);
-
-        return View(user);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> DeleteConfirmed(int id)
-    {
-        try
-        {
-            await _mediator.Send(new DeleteUserCommand(id));
-            return RedirectToAction("Index");
-        }
-        catch (Exception)
-        {
-            ModelState.AddModelError("", "Sucedió un error al intentar eliminar el usuario.");
-            return View();
-        }
-    }
-
-    public async Task<IActionResult> CerrarSesion()
-    {
-        await HttpContext.SignOutAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme
-        );
-
-        return RedirectToAction("Login");
     }
 }
 
