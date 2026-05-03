@@ -19,7 +19,10 @@
         </dd>
     </dl>
     
-    <form asp-action="Delete">
+    <form asp-action="Delete" asp-route-id="@Model.BrandId" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="BrandId" />
+
         <input type="submit" value="Eliminar" class="btn btn-danger" /> |
         <a asp-action="Index" class="btn btn-info">Cancelar</a>
     </form>

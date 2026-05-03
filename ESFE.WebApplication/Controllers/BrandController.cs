@@ -80,30 +80,24 @@ namespace ESFE.WebApplication.Controllers
         }
 
         // GET: BrandController/Delete/5
+        // GET
         public async Task<IActionResult> Delete(int id)
         {
             var brand = await _mediator.Send(new GetBrandQuery(id));
             return View(brand);
         }
 
-        // POST: BrandController/Delete/5
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id, BrandResponse brandResponse)
+        [ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                var result = await _mediator.Send(new DeleteBrandCommand(id));
-                if (result > 0)
-                    return RedirectToAction(nameof(Index));
-                else
-                    throw new Exception("Sucedio un error la intentar editar marca");
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError("", ex.Message);
-                return View(brandResponse);
-            }
+            var result = await _mediator.Send(new DeleteBrandCommand(id));
+            if (result > 0)
+                return RedirectToAction(nameof(Index));
+
+            throw new Exception("Sucedio un error al intentar eliminar marca");
         }
     }
 }
