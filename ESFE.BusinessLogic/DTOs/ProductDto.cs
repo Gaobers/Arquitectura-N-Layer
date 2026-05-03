@@ -27,7 +27,7 @@ public class CreateProductRequest
 }
 public class UpdateProductRequest
 {
-    public long ProductId { get; set; }
+    public int ProductId { get; set; }
 
     public int? BrandId { get; set; }
 
@@ -52,7 +52,7 @@ public class UpdateProductRequest
 
 public class ProductResponse
 {
-    public long ProductId { get; set; }
+    public int ProductId { get; set; }
 
     public string? SupplierName { get; set; }
 

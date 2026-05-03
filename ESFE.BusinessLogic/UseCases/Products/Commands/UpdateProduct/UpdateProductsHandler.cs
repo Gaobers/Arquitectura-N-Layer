@@ -13,7 +13,7 @@ namespace ESFE.BusinessLogic.UseCases.Products.Commands.UpdateProducts
         {
             try
             {
-                var existingProduct = await _repository.GetByIdAsync(command.Request.ProductId, cancellationToken);
+                var existingProduct = await _repository.GetByIdAsync((int)command.Request.ProductId, cancellationToken);
                 if (existingProduct == null) return 0;
 
                 existingProduct = command.Request.Adapt(existingProduct);
@@ -23,7 +23,7 @@ namespace ESFE.BusinessLogic.UseCases.Products.Commands.UpdateProducts
             }
             catch (Exception)
             {
-                return 0;
+                //return 0;
                 throw;
             }
         }
