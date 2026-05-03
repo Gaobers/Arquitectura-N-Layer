@@ -33,7 +33,7 @@ public class CreateUserRequest
 
     public bool? UserStatus { get; set; }
 
-    public DateOnly? RegistrationDate { get; set; }
+    public DateTime? RegistrationDate { get; set; }
 }
 
 
@@ -51,7 +51,7 @@ public class UpdateUserRequest
 
     public bool? UserStatus { get; set; }
 
-    public DateOnly? RegistrationDate { get; set; }
+    public DateTime? RegistrationDate { get; set; }
 }
 
 
@@ -79,5 +79,5 @@ public  class UserByIdResponse
 
     public bool? UserStatus { get; set; }
 
-    public DateOnly? RegistrationDate { get; set; }
+    public DateTime? RegistrationDate { get; set; }
 }
